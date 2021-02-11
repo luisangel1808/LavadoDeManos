@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Lavado de manos</title>
+</head>
+<body>
+    <h1>Registrar lavado de manos</h1>
+    <form action="#">
+        <select id="name">
+          <option value="empleado1">Empleado 1</option>
+          <option value="empleado2">Empleado 2</option>
+          <option value="empleado3">Empleado 3</option>
+        </select>
+        <label for="soap"><input type="checkbox" id="soap" value="soap"> Con Jabón</label>
+        <label for="gel"><input type="checkbox" id="gel" value="gel"> Con Gel</label>
+        <input type="text" placeholder="Observaciones" id="observations">
+        <div class="hour">
+          <label for="now"><input type="radio" id="now" name="date" value="now" checked>Hora actual</label>
+          <label for="other"><input type="radio" id="other" name="date" value="other">Otra hora</label>
+        </div>
+        <div id="hour-manual" class="hidde">
+          <input id="myDate" type="date" min="2020-01-01" max="2022-12-31">
+          <input id="myHour" type="time">
+        </div>
+        <button onclick="newRegister()">Guardar</button>
+    </form>
+    <h1>Registros</h1>
+    <table>
+      <thead>
+        <tr>
+          <td>Fecha</td>
+          <td>Persona</td>
+          <td>Jabón</td>
+          <td>Alcohol</td>
+          <td>Observaciones</td>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+
+      </tbody>
+    </table>
+</body>
+
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
+
+<script src="index.js"></script>
+</html>
