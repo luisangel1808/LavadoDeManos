@@ -82,7 +82,11 @@ const getValues = (obj)=>{
         const tdObservations = document.createElement('td');
         tdUser.innerText = item.user;
         const date = new Date(item.date);
-        const completedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+        let minutes = date.getMinutes();
+        if(minutes<10) minutes = `0${minutes}`;
+        let hours = date.getHours();
+        if(hours<10) hours = `0${hours}`;
+        const completedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${hours}:${minutes}`
         tdDate.innerText = completedDate;
         let soapText;
         let gelText;

@@ -15,6 +15,7 @@ body{
     background-color: rgb(245, 209, 166);
 }
 h1{
+    text-align: center;
     margin-top: 10px;
     font-size: 2rem;
     
@@ -58,19 +59,25 @@ button:hover{
     background-color: rgb(152, 241, 19);
     color: black;
 }
+.registers{
+    max-width: 90vw;
+    margin: 10px;
+}
 
 table{
+   
     font-size: 1.5rem;
-    width: 90%;
+    width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
     text-align: left;    
-    border: 1px solid black;
-    overflow-x: auto;
-    display: block;
+ 
 }
+
 thead{
+    width: 513px;
     background-color: blanchedalmond;
+    font-weight: bold;
 }
 thead th, td{
     padding: 10px;
@@ -100,5 +107,9 @@ tbody tr:nth-child(even) {
     background-color: #eceaec;
 }
 
-
-
+@media screen and (max-width: 1200px) {   
+    table {
+      overflow-x: auto;
+      display: block;
+    }
+}
