@@ -5,23 +5,27 @@
 }
 html{
     font-size: 62.5%;
+
 }
 
 body{
+    background-color: rgb(255, 235, 124);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(245, 209, 166);
+    
 }
 h1{
     text-align: center;
-    margin-top: 10px;
+    margin: 10px auto;
     font-size: 2rem;
-    
+    background-color: rgb(233, 224, 224);
+    padding: 5px;
+    border-radius: 10px;
 }
 form{
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
@@ -47,6 +51,8 @@ input{
         align-items: center;
 }
 button{
+    width: max-content;
+    align-self: center;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -55,6 +61,18 @@ button{
     color: white;
     font-weight: bold;
 }
+.delete{
+    background-color: rgb(255, 45, 45);
+}
+.delete:hover{
+    background-color: rgb(248, 80, 80);
+}
+.update{
+    background-color: royalblue;
+}
+.update:hover{
+    background-color: rgb(102, 136, 236);
+}
 button:hover{
     background-color: rgb(152, 241, 19);
     color: black;
@@ -62,16 +80,18 @@ button:hover{
 .registers{
     max-width: 90vw;
     margin: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 table{
-   
     font-size: 1.5rem;
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
     text-align: left;    
- 
+    word-wrap: break-word;
 }
 
 thead{

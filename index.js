@@ -55,54 +55,92 @@ const newRegister = () =>{
       })
 }
 
-
 const getAllRegisters = () =>{
     registerListRef.on('value', (snapshot) => {
         const data = snapshot.val();
-        console.log(data);
-        console.log(Object.keys(data));
         getValues(data);
     });
 }
-const tbody = document.getElementById('tbody')
+const tbody = document.getElementById('tbody');
+const sectionRegisters = document.getElementById('registers');
+const downloadButton = document.createElement('button');
+downloadButton.type='button';
+downloadButton.innerText='Descargar datos';
+sectionRegisters.appendChild(downloadButton);
 const getValues = (obj)=>{
     while(tbody.lastChild){
         tbody.removeChild(tbody.lastChild);
     }
     let registersArray = []
+    let keys = []
+    console.log(obj)
     Object.keys(obj).forEach((key)=> {
+        keys.push(key);
         registersArray.push(obj[key]);
     });
-    registersArray.map((item)=>{
+    console.log(registersArray)
+    registersArray.map((item, index)=>{
         const tr = document.createElement('tr');
-        const tdUser = document.createElement('td');
-        const tdDate = document.createElement('td');
-        const tdGel = document.createElement('td');
-        const tdSoap = document.createElement('td');
-        const tdObservations = document.createElement('td');
-        tdUser.innerText = item.user;
+        const td = [];
+        for(let i = 0; i<6; i++){
+            td[i] = document.createElement('td');
+            tr.appendChild(td[i]);
+        }
+        td[0].innerText = item.user;
         const date = new Date(item.date);
         let minutes = date.getMinutes();
         if(minutes<10) minutes = `0${minutes}`;
         let hours = date.getHours();
         if(hours<10) hours = `0${hours}`;
         const completedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${hours}:${minutes}`
-        tdDate.innerText = completedDate;
+        td[1].innerText = completedDate;
         let soapText;
         let gelText;
         item.soap ? soapText= "Sí" : soapText="No";
         item.gel ? gelText= "Sí" : gelText="No";
-        tdSoap.innerText = soapText;
-        tdGel.innerText = gelText;
-        tdObservations.innerText = item.observations;
-        tr.appendChild(tdDate);
-        tr.appendChild(tdUser);
-        tr.appendChild(tdGel);
-        tr.appendChild(tdSoap);
-        tr.appendChild(tdObservations);
-        tbody.appendChild(tr)
+        td[2].innerText = soapText;
+        td[3].innerText = gelText;
+        td[4].innerText = item.observations;
+        const editButton = document.createElement('button');
+        editButton.type='button';
+        editButton.innerText='Editar';
+        editButton.classList.add('update');
+        //td[5].appendChild(editButton);
+        const deleteButton = document.createElement('button');
+        deleteButton.type='button';
+        deleteButton.innerText='Borrar';
+        deleteButton.classList.add('delete');
+        deleteButton.onclick = ()=>{
+            removeRegister(keys[index])
+        }
+        td[5].appendChild(deleteButton);
+        tbody.appendChild(tr);
+
     })
+
+    downloadButton.onclick= ()=>{
+        exportData(registersArray);
+    }
+    
 }
 
+const exportData =(data) =>{
+    filename='Reporte.xlsx';
+     var ws = XLSX.utils.json_to_sheet(data);
+     var wb = XLSX.utils.book_new();
+     XLSX.utils.book_append_sheet(wb, ws, "Registers");
+     XLSX.writeFile(wb,filename);
+}
 
 getAllRegisters();
+
+const removeRegister = (key) =>{
+    const adaRef = firebase.database().ref(`pregistros/${key}`);
+    adaRef.remove()
+      .then(function() {
+        console.log("Remove succeeded.")
+    })
+    .catch(function(error) {
+        console.log("Remove failed: " + error.message)
+    });
+}

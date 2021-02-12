@@ -28,7 +28,7 @@
         </div>
         <button onclick="newRegister()">Guardar</button>
     </form>
-    <section class="registers">
+    <section class="registers" id="registers">
       <h1>Registros</h1>
       <table>
         <thead>
@@ -38,6 +38,7 @@
             <td>Jabón</td>
             <td>Alcohol</td>
             <td>Observaciones</td>
+            <td></td>
           </tr>
         </thead>
         <tbody id="tbody">
@@ -53,4 +54,6 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 
 <script src="index.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script> 
+
 </html>
