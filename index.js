@@ -38,7 +38,6 @@ const newRegister = () =>{
     ? date= Date.now() 
     :  date = Date.parse(new Date(`${myDate.value}T${myHour.value}:00`));
     
-    
     const newRegisterRef = registerListRef.push();
     newRegisterRef.set({
         user,
@@ -55,8 +54,9 @@ const newRegister = () =>{
       })
 }
 
-const getAllRegisters = () =>{
-    registerListRef.on('value', (snapshot) => {
+const getAllRegisters = (initDate, finalDate) =>{
+    console.log(initDate)
+    registerListRef.orderByChild('date').startAt(initDate).endAt(finalDate).on('value', (snapshot) => {
         const data = snapshot.val();
         getValues(data);
     });
@@ -68,6 +68,10 @@ downloadButton.type='button';
 downloadButton.innerText='Descargar datos';
 sectionRegisters.appendChild(downloadButton);
 const getValues = (obj)=>{
+    if(!obj){
+        alert('No existen registros en este rango')
+        return false
+    }
     while(tbody.lastChild){
         tbody.removeChild(tbody.lastChild);
     }
@@ -78,7 +82,17 @@ const getValues = (obj)=>{
         keys.push(key);
         registersArray.push(obj[key]);
     });
-    console.log(registersArray)
+
+    registersArray.sort(function(a, b) {
+        if (a.date < b.date) {
+          return 1;
+        }
+        if (a.date > b.date) {
+          return -1;
+        }
+        return 0;
+    });
+
     registersArray.map((item, index)=>{
         const tr = document.createElement('tr');
         const td = [];
@@ -93,13 +107,12 @@ const getValues = (obj)=>{
         let hours = date.getHours();
         if(hours<10) hours = `0${hours}`;
         const completedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${hours}:${minutes}`
+        item.date=completedDate;
         td[1].innerText = completedDate;
-        let soapText;
-        let gelText;
-        item.soap ? soapText= "Sí" : soapText="No";
-        item.gel ? gelText= "Sí" : gelText="No";
-        td[2].innerText = soapText;
-        td[3].innerText = gelText;
+        item.soap ? item.soap= "Sí" : item.soap="No";
+        item.gel ? item.gel= "Sí" : item.gel="No";
+        td[2].innerText = item.soap;
+        td[3].innerText = item.gel;
         td[4].innerText = item.observations;
         const editButton = document.createElement('button');
         editButton.type='button';
@@ -115,10 +128,10 @@ const getValues = (obj)=>{
         }
         td[5].appendChild(deleteButton);
         tbody.appendChild(tr);
-
     })
 
     downloadButton.onclick= ()=>{
+        console.log(registersArray);
         exportData(registersArray);
     }
     
@@ -132,8 +145,6 @@ const exportData =(data) =>{
      XLSX.writeFile(wb,filename);
 }
 
-getAllRegisters();
-
 const removeRegister = (key) =>{
     const adaRef = firebase.database().ref(`pregistros/${key}`);
     adaRef.remove()
@@ -143,4 +154,19 @@ const removeRegister = (key) =>{
     .catch(function(error) {
         console.log("Remove failed: " + error.message)
     });
+}
+
+const consultButton = document.getElementById('consult');
+const fromDate = document.getElementById('fromDate');
+const untilDate = document.getElementById('untilDate');
+consultButton.onclick=()=>{
+    let initDate= 0;
+    let finalDate=Date.now();
+    if(fromDate.value){
+        initDate = Date.parse(new Date(`${fromDate.value}T00:00:00`));
+    } 
+    if(untilDate.value){
+        finalDate = Date.parse(new Date(`${untilDate.value}T23:59:59`));
+    }
+    getAllRegisters(initDate, finalDate);
 }

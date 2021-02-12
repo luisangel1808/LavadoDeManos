@@ -29,6 +29,17 @@
         <button onclick="newRegister()">Guardar</button>
     </form>
     <section class="registers" id="registers">
+      <div class="dateInput">
+        <div class='hour-manual'>
+          <h2>Desde</h2>
+          <input id="fromDate" type="date" min="2020-01-01" max="2022-12-31">
+        </div>
+        <div class="hour-manual">
+          <h2>Hasta</h2>
+          <input id="untilDate" type="date" min="2020-01-01" max="2022-12-31">
+        </div>
+      </div>
+      <button id="consult">Consultar Registros</button>
       <h1>Registros</h1>
       <table>
         <thead>

@@ -126,7 +126,9 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
     background-color: #eceaec;
 }
-
+.dateInput{
+    display: flex;
+}
 @media screen and (max-width: 1200px) {   
     table {
       overflow-x: auto;
