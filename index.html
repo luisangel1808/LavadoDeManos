@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <title>Lavado de manos</title>
 </head>
 <body>
+  <header>
+    <img src="./assets/img/logo.jpg" alt="Logo">
+    <a href="users.html">Usuarios</a>
+  </header>
     <h1>Registrar lavado de manos</h1>
     <form action="#">
         <select id="name">
-          <option value="empleado1">Empleado 1</option>
-          <option value="empleado2">Empleado 2</option>
-          <option value="empleado3">Empleado 3</option>
+
         </select>
         <label for="soap"><input type="checkbox" id="soap" value="soap"> Con Jabón</label>
         <label for="gel"><input type="checkbox" id="gel" value="gel"> Con Gel</label>
@@ -28,6 +30,7 @@
         </div>
         <button onclick="newRegister()">Guardar</button>
     </form>
+    <h1>Filtrar registros</h1>
     <section class="registers" id="registers">
       <div class="dateInput">
         <div class='hour-manual'>
@@ -40,22 +43,26 @@
         </div>
       </div>
       <button id="consult">Consultar Registros</button>
-      <h1>Registros</h1>
-      <table>
-        <thead>
-          <tr>
-            <td>Fecha</td>
-            <td>Persona</td>
-            <td>Jabón</td>
-            <td>Alcohol</td>
-            <td>Observaciones</td>
-            <td></td>
-          </tr>
-        </thead>
-        <tbody id="tbody">
-  
-        </tbody>
-      </table>
+        <h1>Registros</h1>
+        <table id="registers__table" class="hidde">
+          <thead>
+            <tr>
+              <td>Fecha</td>
+              <td>Persona</td>
+              <td>Jabón</td>
+              <td>Gel</td>
+              <td>Observaciones</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+    
+          </tbody>
+        </table>
+        <div>
+          <h2 class="quantity"></h2>
+        </div>
+        <div class="buttons"></div>
     </section>
 
 
@@ -64,7 +71,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-database.js"></script>
 
-<script src="index.js"></script>
+<script src="./scripts/index.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.1/xlsx.full.min.js"></script> 
 
 </html>
